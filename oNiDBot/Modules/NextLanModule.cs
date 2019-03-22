@@ -1,34 +1,25 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
+using oNiDBot.Services;
 
 namespace oNiDBot.Modules
 {
     public class NextLanModule : ModuleBase<SocketCommandContext>
     {
+        public LanInfoService LanInfoService { get; set; }
+
         [Command("NextLan")]
-        public Task NextLan()
+        public async Task NextLan()
         {
-            string htmlContents = "";
-            using(var client = new WebClient())
-            {
-                htmlContents = client.DownloadString("https://lan.lsucs.org.uk/");
-            }
-            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-            doc.LoadHtml(htmlContents);
+            var nextLanInfo = await LanInfoService.GetNextLanInfo();
 
-            var lanName = doc.DocumentNode.SelectSingleNode("//*[@id=\"lan\"]").InnerText;
-            var startDatestr = doc.DocumentNode.SelectSingleNode("//*[@id=\"title-container\"]/script").InnerText;
-            startDatestr = startDatestr.Replace("var countdown_start = \"", "");
-            startDatestr = startDatestr.Replace("\";", "");
+            var days = Math.Round(( nextLanInfo.StartDate - DateTime.Now ).TotalDays,0);
 
-            var startDate = DateTime.Parse(startDatestr);
-
-            var days = Math.Round((  startDate - DateTime.Now ).TotalDays,0);
-
-            return ReplyAsync(
-                $"{lanName} starts {startDate.ToString("dddd, dd MMMM yyyy")} ({days} days)\n");
+            await ReplyAsync(
+                $"{nextLanInfo.Name} starts {nextLanInfo.StartDate.ToString("dddd, dd MMMM yyyy")} ({days} days)\n");
 
         }
             

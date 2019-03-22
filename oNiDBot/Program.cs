@@ -43,7 +43,8 @@ namespace oNiDBot
                 .AddSingleton(_client)
                 .AddSingleton<CommandService>()
                 .AddSingleton<CommandHandlingService>()
-              
+                .AddSingleton<LanInfoService>()
+                .AddSingleton<Division2InfoService>()
                 // Add additional services here...
                 .BuildServiceProvider();
         }

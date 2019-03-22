@@ -10,5 +10,6 @@ namespace oNiDBot
     public static class Context
     {
         public static string Token => ConfigurationManager.AppSettings["DiscordToken"];
+        public static string[] GamerTags=> ConfigurationManager.AppSettings["Gamertags"].Split(',');
     }
 }

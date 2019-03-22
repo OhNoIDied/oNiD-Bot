@@ -214,10 +214,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context.cs" />
+    <Compile Include="Modules\Division2Module.cs" />
     <Compile Include="Modules\InfoModule.cs" />
     <Compile Include="Modules\NextLanModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Division2InfoService.cs" />
+    <Compile Include="Services\LanInfoService.cs" />
     <Compile Include="Services\CommandHandlingService.cs" />
   </ItemGroup>
   <ItemGroup>
